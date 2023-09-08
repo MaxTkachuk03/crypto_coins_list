@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+//! lesson 4 ended
+
 void main() {
   runApp(const CryptoCurrenciesListApp());
 }
@@ -17,6 +19,19 @@ class CryptoCurrenciesListApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 31, 31, 31),
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow),
         useMaterial3: true,
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.white,
+        ),
+        dividerColor: Colors.white24,
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.w700,
+          ),
+          backgroundColor: Color.fromARGB(255, 31, 31, 31),
+          surfaceTintColor: Color.fromARGB(255, 31, 31, 31),
+        ),
         textTheme: TextTheme(
           bodyMedium: const TextStyle(
             color: Colors.white,
@@ -45,25 +60,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: theme.colorScheme.primary,
-        title: const Text('Crypto Currencies List'),
+        title: const Text('CryptoCurrenciesList'),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: 10,
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            color: theme.dividerColor,
+          );
+        },
         itemBuilder: (context, index) => ListTile(
           leading: SvgPicture.asset(
             'assets/svg/bitcoin_logo.svg',
@@ -78,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
             "20000\$",
             style: theme.textTheme.labelSmall,
           ),
+          trailing: Icon(Icons.arrow_forward_ios),
         ),
       ),
     );

@@ -9,13 +9,14 @@ final darkTheme = ThemeData(
         ),
         dividerColor: Colors.white24,
         appBarTheme: const AppBarTheme(
+          elevation: 0,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 20.0,
             fontWeight: FontWeight.w700,
           ),
-          backgroundColor: Color.fromARGB(255, 41, 41, 41),
-          surfaceTintColor: Color.fromARGB(255, 150, 150, 150),
+          backgroundColor: Color.fromARGB(255, 31, 31, 31),
+          surfaceTintColor: Color.fromARGB(255, 31, 31, 31),
           iconTheme: IconThemeData(
             color: Colors.white,
           ),

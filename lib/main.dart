@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-//! lesson 8 ended
+//! lesson 10 ended
 
 void main() {
   GetIt.instance.registerLazySingleton<AbstractCoinsRepository>(

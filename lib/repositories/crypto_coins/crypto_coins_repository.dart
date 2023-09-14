@@ -16,7 +16,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   Future<List<CryptoCoin>> getCoinsList() async {
     final response = await dio.get(url);
 
-    debugPrint(response.toString());
+    //debugPrint(response.toString());
 
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;

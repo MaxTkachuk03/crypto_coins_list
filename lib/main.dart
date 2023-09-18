@@ -1,14 +1,49 @@
+import 'dart:async';
 import 'package:crypto_coins_list/crypto_coins_list_app.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger.dart';
+import 'package:talker_dio_logger/talker_dio_logger.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
-//! lesson 10 ended
+//! lesson 11 ended
 
 void main() {
-  GetIt.instance.registerLazySingleton<AbstractCoinsRepository>(
-    () => CryptoCoinsRepository(dio: Dio()),
+  final talker = TalkerFlutter.init();
+
+  GetIt.I.registerSingleton(talker);
+  GetIt.I<Talker>().debug("Talker started...");
+
+  Bloc.observer = TalkerBlocObserver(
+    talker: talker,
+    settings: const TalkerBlocLoggerSettings(
+      printStateFullData: false,
+      printEventFullData: false,
+    ),
   );
-  runApp(const CryptoCurrenciesListApp());
+
+  final dio = Dio();
+  dio.interceptors.add(
+    TalkerDioLogger(
+      talker: talker,
+      settings: const TalkerDioLoggerSettings(
+        printResponseData: false,
+      ),
+    ),
+  );
+
+  GetIt.instance.registerLazySingleton<AbstractCoinsRepository>(
+    () => CryptoCoinsRepository(dio: dio),
+  );
+
+  FlutterError.onError =
+      (details) => GetIt.I<Talker>().handle(details.exception, details.stack);
+
+  runZonedGuarded(
+    () => runApp(const CryptoCurrenciesListApp()),
+    (error, stackTrace) => GetIt.I<Talker>().handle(error, stackTrace),
+  );
 }

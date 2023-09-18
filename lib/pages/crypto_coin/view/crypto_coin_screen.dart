@@ -85,25 +85,28 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                   BaseCard(
                     child: Center(
                       child: Text(
-                    "${coinDetails.priceInUSD} \$",
-                    style: const TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
+                        "${coinDetails.priceInUSD} \$",
+                        style: const TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
-                    ),
-                  ),
-                  BaseCard(child: Column(children: [
-                    _DataRow(
-                          title: 'Hight 24 Hour',
-                          value: '${coinDetails.high24Hour} \$',
-                        ),
-                        const SizedBox(height: 6),
-                        _DataRow(
-                          title: 'Low 24 Hour',
-                          value: '${coinDetails.low24Hour} \$',
-                        ),
-                  ],))
+                  BaseCard(
+                      child: Column(
+                    children: [
+                      _DataRow(
+                        title: 'Hight 24 Hour',
+                        value: '${coinDetails.high24Hour} \$',
+                      ),
+                      const SizedBox(height: 6),
+                      _DataRow(
+                        title: 'Low 24 Hour',
+                        value: '${coinDetails.low24Hour} \$',
+                      ),
+                    ],
+                  ))
                 ],
               ),
             );
@@ -141,7 +144,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
 }
 
 class _DataRow extends StatelessWidget {
-  const _DataRow({super.key, required this.title, required this.value});
+  const _DataRow({required this.title, required this.value});
 
   final String title;
   final String value;

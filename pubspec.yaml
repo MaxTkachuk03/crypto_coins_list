@@ -19,6 +19,7 @@ dependencies: #Залежності нашого додатку
   talker_dio_logger: ^2.3.0
   talker_bloc_logger: ^2.2.0
   intl: ^0.18.1
+  firebase_core: ^2.16.0
 
 dev_dependencies: #Залежності які використовуються Flutter додатком в момент розробки
   flutter_test:

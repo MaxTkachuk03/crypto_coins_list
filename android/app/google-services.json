@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676274884949",
+    "project_id": "crypto-list-app-01",
+    "storage_bucket": "crypto-list-app-01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676274884949:android:93a935a6b5d2338318dfdc",
+        "android_client_info": {
+          "package_name": "com.cryptoguys.crypto_coins_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIX8NPGaHpQwGhGas6TWEnzjbc4Q7mrfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

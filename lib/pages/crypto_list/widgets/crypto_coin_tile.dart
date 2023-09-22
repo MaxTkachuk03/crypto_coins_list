@@ -8,14 +8,15 @@ class CryptoCoinTile extends StatelessWidget {
   });
 
   final CryptoCoin coin;
-  static const double sizeImage = 30.0;
+  static const double sizeImage = 50.0;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final coinDetails = coin.details;
     return ListTile(
       leading: Image.network(
-        coin.imageUrl,
+        coinDetails.fullImageUrl,
         height: sizeImage,
         width: sizeImage,
       ),
@@ -24,7 +25,7 @@ class CryptoCoinTile extends StatelessWidget {
         style: theme.textTheme.bodyMedium,
       ),
       subtitle: Text(
-        "${coin.priceInUSD}\$",
+        "${coinDetails.priceInUSD}\$",
         style: theme.textTheme.labelSmall,
       ),
       trailing: const Icon(Icons.arrow_forward_ios),

@@ -20,11 +20,14 @@ dependencies: #Залежності нашого додатку
   talker_bloc_logger: ^2.2.0
   intl: ^0.18.1
   firebase_core: ^2.16.0
+  json_annotation: ^4.8.1
 
 dev_dependencies: #Залежності які використовуються Flutter додатком в момент розробки
   flutter_test:
     sdk: flutter 
-  flutter_lints: ^2.0.0 #Лінтер не піде в підсумкову зборку і не буде займати зайве місце на гаджеті користувача
+  flutter_lints: ^2.0.3 #Лінтер не піде в підсумкову зборку і не буде займати зайве місце на гаджеті користувача
+  json_serializable: ^6.7.1
+  build_runner: 2.4.6
 
 flutter: #Тут можна вказати всі додаткові залежності нашого додатку та, якісь конфігураційні налаштування 
   uses-material-design: true 

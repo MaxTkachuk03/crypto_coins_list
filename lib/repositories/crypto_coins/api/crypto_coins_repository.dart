@@ -22,39 +22,29 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final cryptoCoinsList = dataRaw.entries.map((e) {
       final usdData =
           (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-      final price = usdData['PRICE'];
-      final imageUrl = usdData['IMAGEURL'];
+
+      final details = CryptoCoinDetails.fromJson(usdData);
       return CryptoCoin(
         name: e.key,
-        priceInUSD: price,
-        imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+        details: details,
       );
     }).toList();
     return cryptoCoinsList;
   }
 
   @override
-  Future<CryptoCoinDetails> getCryptoCoinDetails(String nameCode) async {
-    final response =await  dio.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=$nameCode&tsyms=USD');
+  Future<CryptoCoin> getCryptoCoinDetails(String nameCode) async {
+    final response = await dio.get(
+        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=$nameCode&tsyms=USD');
 
-    final data = response.data as Map<String,dynamic>;
-    final dataRaw = data["RAW"] as Map<String,dynamic>;
-    final coinData = dataRaw[nameCode] as Map<String,dynamic>;
-    final usdData = coinData["USD"] as Map<String,dynamic>;
-    final priceInUSD = usdData["PRICE"];
-    final imageUrl = usdData["IMAGEURL"];
-    final toSymbol = usdData["TOSYMBOL"];
-    final lastUpdate = usdData["LASTUPDATE"];
-    final low24Hour = usdData["LOW24HOUR"];
-    final high24Hour = usdData["HIGH24HOUR"];
-    return CryptoCoinDetails(
+    final data = response.data as Map<String, dynamic>;
+    final dataRaw = data["RAW"] as Map<String, dynamic>;
+    final coinData = dataRaw[nameCode] as Map<String, dynamic>;
+    final usdData = coinData["USD"] as Map<String, dynamic>;
+    final details = CryptoCoinDetails.fromJson(usdData);
+    return CryptoCoin(
       name: nameCode,
-      priceInUSD: priceInUSD,
-      imageUrl: 'https://www.cryptocompare.com/$imageUrl',
-      toSymbol: toSymbol,
-      lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
-      low24Hour: low24Hour,
-      high24Hour: high24Hour,
+      details: details,
     );
   }
 }

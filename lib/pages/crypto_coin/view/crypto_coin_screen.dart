@@ -55,7 +55,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
           enableFeedback: true,
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed('/');
           },
         ),
       ),

@@ -21,6 +21,7 @@ dependencies: #Залежності нашого додатку
   intl: ^0.18.1
   firebase_core: ^2.16.0
   json_annotation: ^4.8.1
+  hive_flutter: 1.1.0
 
 dev_dependencies: #Залежності які використовуються Flutter додатком в момент розробки
   flutter_test:
@@ -28,6 +29,7 @@ dev_dependencies: #Залежності які використовуються 
   flutter_lints: ^2.0.3 #Лінтер не піде в підсумкову зборку і не буде займати зайве місце на гаджеті користувача
   json_serializable: ^6.7.1
   build_runner: 2.4.6
+  hive_generator: ^2.0.1
 
 flutter: #Тут можна вказати всі додаткові залежності нашого додатку та, якісь конфігураційні налаштування 
   uses-material-design: true 

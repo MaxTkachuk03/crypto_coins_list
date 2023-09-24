@@ -82,8 +82,10 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Something went wrong",
-                        style: theme.textTheme.headlineMedium),
+                    Text(
+                      "Something went wrong",
+                      style: theme.textTheme.headlineMedium,
+                    ),
                     Text(
                       "Please try again later",
                       style:

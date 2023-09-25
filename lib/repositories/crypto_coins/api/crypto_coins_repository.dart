@@ -21,7 +21,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   Future<List<CryptoCoin>> getCoinsList() async {
     List<CryptoCoin> cryptoCoinsList = <CryptoCoin>[];
     try {
-      final List<CryptoCoin> cryptoCoinsList = await _fetchCoinsListFromApi();
+      cryptoCoinsList = await _fetchCoinsListFromApi();
 
       final cryptoCoinsMap = {for (var e in cryptoCoinsList) e.name: e};
       await cryptoCoinsBox.putAll(cryptoCoinsMap);

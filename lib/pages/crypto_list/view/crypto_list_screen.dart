@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins_list/bloc/crypto_list_bloc/crypto_list_bloc.dart';
 import 'package:crypto_coins_list/pages/crypto_list/widgets/widgets.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+@RoutePage()   
 class CryptoListScreen extends StatefulWidget {
   const CryptoListScreen({
     super.key,
@@ -63,6 +65,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
           builder: (context, state) {
             if (state is CryptoListLoaded) {
               return ListView.separated(
+                //shrinkWrap: true,
                 padding: const EdgeInsets.only(top: 16.0),
                 itemCount: state.coinsList.length,
                 separatorBuilder: (BuildContext context, int index) {
@@ -76,33 +79,33 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                 },
               );
             }
-            if (state is CryptoListLoadingFailure) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Something went wrong",
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                    Text(
-                      "Please try again later",
-                      style:
-                          theme.textTheme.labelSmall?.copyWith(fontSize: 16.0),
-                    ),
-                    const SizedBox(height: 30.0),
-                    TextButton(
-                        onPressed: () {
-                          _cyptoListBloc.add(LoadCryptoList());
-                        },
-                        child: const Text(
-                          "Try again",
-                        )),
-                  ],
-                ),
-              );
-            }
+            // if (state is CryptoListLoadingFailure) {
+            //   return Center(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         Text(
+            //           "Something went wrong",
+            //           style: theme.textTheme.headlineMedium,
+            //         ),
+            //         Text(
+            //           "Please try again later",
+            //           style:
+            //               theme.textTheme.labelSmall?.copyWith(fontSize: 16.0),
+            //         ),
+            //         const SizedBox(height: 30.0),
+            //         TextButton(
+            //             onPressed: () {
+            //               _cyptoListBloc.add(LoadCryptoList());
+            //             },
+            //             child: const Text(
+            //               "Try again",
+            //             )),
+            //       ],
+            //     ),
+            //   );
+            // }
             return const Center(child: CircularProgressIndicator());
           },
         ),

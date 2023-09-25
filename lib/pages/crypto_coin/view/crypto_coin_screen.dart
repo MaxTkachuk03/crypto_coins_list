@@ -1,50 +1,66 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins_list/bloc/crypto_coin_details_bloc/bloc/crypto_coin_details_bloc.dart';
 import 'package:crypto_coins_list/models/models.dart';
 import 'package:crypto_coins_list/pages/crypto_coin/crypto_coin.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
+import 'package:crypto_coins_list/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+@RoutePage()
 class CryptoCoinScreen extends StatefulWidget {
-  const CryptoCoinScreen({super.key});
+  const CryptoCoinScreen({
+    super.key,
+    required this.coin,
+  });
+
+  final CryptoCoin coin;
 
   @override
   State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
 }
 
 class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
-  CryptoCoin? coin;
+  // CryptoCoin? coin;
 
   final _cryptoCoinDetailsBloc =
       CryptoCoinDetailsBloc(GetIt.I<AbstractCoinsRepository>());
 
   @override
-  void didChangeDependencies() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    //! Передаємо CryptoCoin
-    assert(args != null && args is CryptoCoin,
-        'You must provide Map<String,dynamic> args');
-    coin = args as CryptoCoin;
-    _cryptoCoinDetailsBloc
-        .add(LoadCryptoCoinDetailsEvent(nameCode: coin!.name));
-    //? Коли args було рядком
-    //! Перший метод(кращий, ефективніший)
-    // assert(args!= null && args is String, 'You must provide String args');
-    // coinName = args as String;
-    //! Другий метод
-    // if (args == null) {
-    //   debugPrint('You must provide args');
-    //   return;
-    // }
-    // if (args is! String) {
-    //   debugPrint('You must provide String args');
-    //   return;
-    // }
-    // coinName = args;
+  void initState() {
+    super.initState();
 
-    super.didChangeDependencies();
+    _cryptoCoinDetailsBloc
+        .add(LoadCryptoCoinDetailsEvent(nameCode: widget.coin.name));
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   final args = ModalRoute.of(context)?.settings.arguments;
+  //   //! Передаємо CryptoCoin
+  //   assert(args != null && args is CryptoCoin,
+  //       'You must provide Map<String,dynamic> args');
+  //   coin = args as CryptoCoin;
+  //   _cryptoCoinDetailsBloc
+  //       .add(LoadCryptoCoinDetailsEvent(nameCode: coin!.name));
+  //   //? Коли args було рядком
+  //   //! Перший метод(кращий, ефективніший)
+  //   // assert(args!= null && args is String, 'You must provide String args');
+  //   // coinName = args as String;
+  //   //! Другий метод
+  //   // if (args == null) {
+  //   //   debugPrint('You must provide args');
+  //   //   return;
+  //   // }
+  //   // if (args is! String) {
+  //   //   debugPrint('You must provide String args');
+  //   //   return;
+  //   // }
+  //   // coinName = args;
+
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +71,10 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
           enableFeedback: true,
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.of(context).pushNamed('/');
+            AutoRouter.of(context).push(const CryptoListRoute());
+            // Navigator.of(context).pushNamed(
+            //   '/',
+            // );
           },
         ),
       ),
@@ -127,8 +146,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                   const SizedBox(height: 30.0),
                   TextButton(
                       onPressed: () {
-                        _cryptoCoinDetailsBloc.add(
-                            LoadCryptoCoinDetailsEvent(nameCode: coin!.name));
+                        _cryptoCoinDetailsBloc.add(LoadCryptoCoinDetailsEvent(
+                            nameCode: widget.coin.name));
                       },
                       child: const Text(
                         "Try again",

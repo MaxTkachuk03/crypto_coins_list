@@ -21,7 +21,9 @@ Future<void> main() async {
   final talker = TalkerFlutter.init();
 
   GetIt.I.registerSingleton(talker);
-  GetIt.I<Talker>().debug("Talker started...");
+
+  const String taklerStart = '"Talker started..."';
+  GetIt.I<Talker>().debug(taklerStart);
 
   const String cryptoCoinsBoxName = 'crypto_coins_box';
 

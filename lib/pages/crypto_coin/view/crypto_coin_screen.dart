@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_coins_list/bloc/crypto_coin_details_bloc/bloc/crypto_coin_details_bloc.dart';
+import 'package:crypto_coins_list/generated/l10n.dart';
 import 'package:crypto_coins_list/models/models.dart';
 import 'package:crypto_coins_list/pages/crypto_coin/crypto_coin.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
@@ -23,6 +24,7 @@ class CryptoCoinScreen extends StatefulWidget {
 
 class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
   // CryptoCoin? coin;
+  static const double sizeImage = 160.0;
 
   final _cryptoCoinDetailsBloc =
       CryptoCoinDetailsBloc(GetIt.I<AbstractCoinsRepository>());
@@ -35,6 +37,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
         .add(LoadCryptoCoinDetailsEvent(nameCode: widget.coin.name));
   }
 
+  
+
   // @override
   // void didChangeDependencies() {
   //   final args = ModalRoute.of(context)?.settings.arguments;
@@ -46,25 +50,24 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
   //       .add(LoadCryptoCoinDetailsEvent(nameCode: coin!.name));
   //   //? Коли args було рядком
   //   //! Перший метод(кращий, ефективніший)
-  //   // assert(args!= null && args is String, 'You must provide String args');
-  //   // coinName = args as String;
+    // assert(args!= null && args is String, 'You must provide String args');
+    // coinName = args as String;
   //   //! Другий метод
-  //   // if (args == null) {
-  //   //   debugPrint('You must provide args');
-  //   //   return;
-  //   // }
-  //   // if (args is! String) {
-  //   //   debugPrint('You must provide String args');
-  //   //   return;
-  //   // }
-  //   // coinName = args;
+    // if (args == null) {
+    //   debugPrint('You must provide args');
+    //   return;
+    // }
+    // if (args is! String) {
+    //   debugPrint('You must provide String args');
+    //   return;
+    // }
+    // coinName = args;
 
   //   super.didChangeDependencies();
   // }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -90,8 +93,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                 children: [
                   Image.network(
                     coinDetails.fullImageUrl,
-                    height: 160.0,
-                    width: 160.0,
+                    height: sizeImage,
+                    width: sizeImage,
                   ),
                   const SizedBox(height: 24.0),
                   Text(
@@ -105,7 +108,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                   BaseCard(
                     child: Center(
                       child: Text(
-                        "${coinDetails.priceInUSD} \$",
+                        "${coinDetails.priceInUSD.toStringAsFixed(3)} \$",
                         style: const TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
@@ -117,41 +120,16 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                       child: Column(
                     children: [
                       _DataRow(
-                        title: 'Hight 24 Hour',
-                        value: '${coinDetails.high24Hour} \$',
+                        title: S.of(context).hight24Hour,
+                        value: '${coinDetails.high24Hour.toStringAsFixed(3)} \$',
                       ),
                       const SizedBox(height: 6),
                       _DataRow(
-                        title: 'Low 24 Hour',
-                        value: '${coinDetails.low24Hour} \$',
+                        title: S.of(context).low24Hour,
+                        value: '${coinDetails.low24Hour.toStringAsFixed(3)} \$',
                       ),
                     ],
                   ))
-                ],
-              ),
-            );
-          }
-          if (state is CryptoCoinDetailsLoadingFailureState) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Something went wrong",
-                      style: theme.textTheme.headlineMedium),
-                  Text(
-                    "Please try again later",
-                    style: theme.textTheme.labelSmall?.copyWith(fontSize: 16.0),
-                  ),
-                  const SizedBox(height: 30.0),
-                  TextButton(
-                      onPressed: () {
-                        _cryptoCoinDetailsBloc.add(LoadCryptoCoinDetailsEvent(
-                            nameCode: widget.coin.name));
-                      },
-                      child: const Text(
-                        "Try again",
-                      )),
                 ],
               ),
             );

@@ -11,14 +11,22 @@ part 'crypto_list_event.dart';
 part 'crypto_list_state.dart';
 
 class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState> {
-  CryptoListBloc(this.coinsRepository) : super(CryptoListInitialState()) {
-    on<LoadCryptoList>((event, emit) async {
+  CryptoListBloc(this.coinsRepository, this.checkInternet, this.coinsLocal)
+      : super(CryptoListInitialState()) {
+    on<LoadCryptoListEvent>((event, emit) async {
       try {
+        final result = await checkInternet.checkInternetConnection();
         if (state is! CryptoListLoaded) {
           emit(CryptoListLoading());
         }
-        final coinsList = await coinsRepository.getCoinsList();
-        emit(CryptoListLoaded(coinsList: coinsList));
+        if (result == true) {
+          final coinsList = await coinsRepository.getCoinsList();
+          emit(CryptoListLoaded(coinsList: coinsList));
+        }
+        else{
+          final coinsList = coinsLocal.getLocalList();
+          emit(CryptoListLoaded(coinsList: coinsList));
+        }
       } catch (exception, stackTrace) {
         emit(CryptoListLoadingFailure(exception: exception));
         GetIt.I<Talker>().handle(exception, stackTrace);
@@ -35,4 +43,6 @@ class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState> {
   }
 
   final AbstractCoinsRepository coinsRepository;
+  final AbstractCoinsLocal coinsLocal;
+  final InternetConnection checkInternet;
 }

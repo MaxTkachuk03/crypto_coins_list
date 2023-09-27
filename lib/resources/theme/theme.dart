@@ -1,42 +1,27 @@
+import 'package:crypto_coins_list/resources/resources.dart';
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 31, 31, 31),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow),
+        scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.primarySwatch),
         useMaterial3: true,
-        indicatorColor: Colors.limeAccent,
+        indicatorColor:AppColors.indicatorColor,
         listTileTheme: const ListTileThemeData(
-          iconColor: Colors.white,
+          iconColor: AppColors.defaultColor,
         ),
-        dividerColor: Colors.white24,
+        dividerColor: AppColors.dividerColor,
         appBarTheme: const AppBarTheme(
           elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w700,
-          ),
-          backgroundColor: Color.fromARGB(255, 31, 31, 31),
-          surfaceTintColor: Color.fromARGB(255, 31, 31, 31),
+          titleTextStyle: AppStyles.titleTextStyle,
+          backgroundColor: AppColors.backgroundColor,
+          surfaceTintColor: AppColors.backgroundColor,
           iconTheme: IconThemeData(
-            color: Colors.white,
+            color: AppColors.defaultColor,
           ),
         ),
         textTheme: TextTheme(
-          headlineMedium: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-            fontSize: 20.0,
-          ),
-          bodyMedium: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 20.0,
-          ),
-          labelSmall: TextStyle(
-            color: Colors.white.withOpacity(0.6),
-            fontWeight: FontWeight.w700,
-            fontSize: 14.0,
-          ),
+          headlineMedium: AppStyles.headlineMedium,
+          bodyMedium: AppStyles.bodyMedium,
+          labelSmall: AppStyles.labelSmall,
         ),
       );

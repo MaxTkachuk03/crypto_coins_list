@@ -10,11 +10,14 @@ part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
-  CryptoCoinDetailsBloc(this.coinsRepository)
+  CryptoCoinDetailsBloc(
+      this.coinsRepository, this.coinsLocal, this.checkInternet)
       : super(CryptoCoinDetailsInitial()) {
     on<LoadCryptoCoinDetailsEvent>(_loadCoinDetails);
   }
   final AbstractCoinsRepository coinsRepository;
+  final AbstractCoinsLocal coinsLocal;
+  final InternetConnection checkInternet;
 
   @override
   void onError(Object error, StackTrace stackTrace) {
@@ -26,14 +29,18 @@ class CryptoCoinDetailsBloc
     LoadCryptoCoinDetailsEvent event,
     Emitter<CryptoCoinDetailsState> emit,
   ) async {
+    final result = await checkInternet.checkInternetConnection();
     try {
       if (state is! CryptoCoinDetailsLoadedState) {
         emit(CryptoCoinDetailsLoadingState());
       }
-
-      final coin =
-          await coinsRepository.getCryptoCoinDetails(event.nameCode);
-      emit(CryptoCoinDetailsLoadedState(coin: coin));
+      if (result == true) {
+        final coin = await coinsRepository.getCryptoCoinDetails(event.nameCode);
+        emit(CryptoCoinDetailsLoadedState(coin: coin));
+      } else {
+        final coin = coinsLocal.getLocalDetails(event.nameCode);
+        emit(CryptoCoinDetailsLoadedState(coin: coin));
+      }
     } catch (exception, stackTrace) {
       emit(CryptoCoinDetailsLoadingFailureState(exception: exception));
       GetIt.I<Talker>().handle(exception, stackTrace);

@@ -5,6 +5,7 @@ import 'package:crypto_coins_list/bloc/crypto_list_bloc/crypto_list_bloc.dart';
 import 'package:crypto_coins_list/generated/l10n.dart';
 import 'package:crypto_coins_list/pages/crypto_list/widgets/widgets.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
+import 'package:crypto_coins_list/resources/icons/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -23,11 +24,13 @@ class CryptoListScreen extends StatefulWidget {
 class _CryptoListScreenState extends State<CryptoListScreen> {
   final _cyptoListBloc = CryptoListBloc(
     GetIt.I<AbstractCoinsRepository>(),
+    GetIt.I<InternetConnection>(),
+    GetIt.I<AbstractCoinsLocal>(),
   );
 
   @override
   void initState() {
-    _cyptoListBloc.add(LoadCryptoList());
+    _cyptoListBloc.add(LoadCryptoListEvent());
     super.initState();
   }
 
@@ -49,7 +52,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.document_scanner_outlined),
+            icon: AppIcon.document,
           ),
         ],
       ),
@@ -58,7 +61,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         backgroundColor: theme.scaffoldBackgroundColor,
         onRefresh: () async {
           final completer = Completer();
-          _cyptoListBloc.add(LoadCryptoList(completer: completer));
+          _cyptoListBloc.add(LoadCryptoListEvent(completer: completer));
           return completer.future;
         },
         child: BlocBuilder<CryptoListBloc, CryptoListState>(

@@ -25,6 +25,7 @@ dependencies: #Залежності нашого додатку
   json_annotation: ^4.8.1
   hive_flutter: ^1.1.0
   auto_route: ^7.8.3
+  connectivity_plus: ^4.0.2
 
 dev_dependencies: #Залежності які використовуються Flutter додатком в момент розробки
   flutter_test:
@@ -33,7 +34,13 @@ dev_dependencies: #Залежності які використовуються 
   json_serializable: ^6.7.1
   hive_generator: ^2.0.1
   auto_route_generator: ^7.3.1
+  flutter_launcher_icons: ^0.13.1
   build_runner: ^2.4.6
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/launcher_icon.jpg"
 
 flutter: #Тут можна вказати всі додаткові залежності нашого додатку та, якісь конфігураційні налаштування 
   uses-material-design: true
@@ -41,6 +48,7 @@ flutter: #Тут можна вказати всі додаткові залеж�
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/svg/
+    - assets/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

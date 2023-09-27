@@ -1,6 +1,6 @@
 {
-    "name": "crypto_coins_list",
-    "short_name": "crypto_coins_list",
+    "name": "CryptoCoinsList",
+    "short_name": "CryptoCoinsList",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
@@ -9,6 +9,11 @@
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
+        {
+            "src": "icons/launcher_icon.jpg",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
         {
             "src": "icons/Icon-192.png",
             "sizes": "192x192",

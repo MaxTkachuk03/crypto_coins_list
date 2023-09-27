@@ -1,3 +1,4 @@
+import 'package:crypto_coins_list/resources/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class BaseCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class BaseCard extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
-        color: const Color.fromARGB(255, 21, 21, 21),
+        color: AppColors.baseCardColor,
       ),
       child: child,
     );

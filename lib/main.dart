@@ -48,6 +48,10 @@ Future<void> main() async {
     ),
   );
 
+  GetIt.instance.registerLazySingleton(
+    () => const InternetConnection(),
+  );
+
   final dio = Dio();
   dio.interceptors.add(
     TalkerDioLogger(
@@ -61,6 +65,12 @@ Future<void> main() async {
   GetIt.instance.registerLazySingleton<AbstractCoinsRepository>(
     () => CryptoCoinsRepository(
       dio: dio,
+      cryptoCoinsBox: cryptoCoinsBox,
+    ),
+  );
+
+  GetIt.instance.registerLazySingleton<AbstractCoinsLocal>(
+    () => CryptoCoinsLocal(
       cryptoCoinsBox: cryptoCoinsBox,
     ),
   );

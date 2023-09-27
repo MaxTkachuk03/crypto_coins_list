@@ -1,9 +1,7 @@
 import 'package:crypto_coins_list/models/models.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 class CryptoCoinsRepository implements AbstractCoinsRepository {
   CryptoCoinsRepository({
@@ -19,19 +17,11 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
 
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
-    List<CryptoCoin> cryptoCoinsList = <CryptoCoin>[];
-    try {
-      cryptoCoinsList = await _fetchCoinsListFromApi();
+    final List<CryptoCoin> cryptoCoinsList = await _fetchCoinsListFromApi();
 
-      final cryptoCoinsMap = {for (var e in cryptoCoinsList) e.name: e};
-      await cryptoCoinsBox.putAll(cryptoCoinsMap);
-    } catch (e, st) {
-      GetIt.instance<Talker>().handle(e, st);
-      cryptoCoinsList = cryptoCoinsBox.values.toList();
-    }
+    final cryptoCoinsMap = {for (var e in cryptoCoinsList) e.name: e};
+    await cryptoCoinsBox.putAll(cryptoCoinsMap);
 
-    cryptoCoinsList
-        .sort((a, b) => b.details.priceInUSD.compareTo(a.details.priceInUSD));
     return cryptoCoinsList;
   }
 
@@ -55,14 +45,9 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
 
   @override
   Future<CryptoCoin> getCryptoCoinDetails(String nameCode) async {
-    try {
-      final coin = await _fetchCoinDetailsFromApi(nameCode);
-      cryptoCoinsBox.put(nameCode, coin);
-      return coin;
-    } catch (e, st) {
-      GetIt.instance<Talker>().handle(e, st);
-      return cryptoCoinsBox.get(nameCode)!;
-    }
+    final coin = await _fetchCoinDetailsFromApi(nameCode);
+    cryptoCoinsBox.put(nameCode, coin);
+    return coin;
   }
 
   Future<CryptoCoin> _fetchCoinDetailsFromApi(String nameCode) async {

@@ -22,10 +22,6 @@ class FailureLoadingList extends StatelessWidget {
             style: theme.textTheme.headlineMedium,
           ),
           Text(
-            S.of(context).pleaseConnectToInternet,
-            style: theme.textTheme.labelSmall?.copyWith(fontSize: 18.0),
-          ),
-          Text(
             S.of(context).pleaseTryAgainLater,
             style: theme.textTheme.labelSmall?.copyWith(fontSize: 16.0),
           ),

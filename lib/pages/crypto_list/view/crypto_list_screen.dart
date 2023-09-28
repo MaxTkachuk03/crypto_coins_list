@@ -66,6 +66,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         color: theme.indicatorColor,
         backgroundColor: theme.scaffoldBackgroundColor,
         onRefresh: () async {
+          _checkInternetBloc.add(const CheckInternetConnectionEvent());
           final completer = Completer();
           _cyptoListBloc.add(LoadCryptoListEvent(completer: completer));
           return completer.future;
@@ -73,12 +74,26 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         child: BlocConsumer<CheckInternetConnectionBloc,
             CheckInternetConnectionState>(
           bloc: _checkInternetBloc,
+          // listenWhen: (previous, current) =>
+          //     previous.checkInternet != current.checkInternet,
           listener: (context, state) {
             context.read<CheckInternetConnectionBloc>().add(
                   CheckInternetConnectionEvent(
                     checkInternet: state.checkInternet,
                   ),
                 );
+            if (state.checkInternet == false) {
+              Timer(const Duration(seconds: 2), () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                    S.of(context).pleaseConnectToInternet,
+                    style: theme.textTheme.labelSmall?.copyWith(fontSize: 14.0),
+                  )),
+                );
+              });
+            }
+            debugPrint(state.checkInternet.toString());
           },
           builder: (context, state) {
             if (state.checkInternet == true) {

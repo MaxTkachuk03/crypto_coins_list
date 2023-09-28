@@ -26,6 +26,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("КриптовалютнийСписок"),
         "hight24Hour":
             MessageLookupByLibrary.simpleMessage("Найвища за 24 год"),
-        "low24Hour": MessageLookupByLibrary.simpleMessage("Найнижча за 24 год")
+        "low24Hour": MessageLookupByLibrary.simpleMessage("Найнижча за 24 год"),
+        "pleaseConnectToInternet": MessageLookupByLibrary.simpleMessage(
+            "Будь ласка, підключіться до інтернету!"),
+        "pleaseTryAgainLater": MessageLookupByLibrary.simpleMessage(
+            "Будь ласка, спробуйте знову пізніше"),
+        "somethingWentWrong":
+            MessageLookupByLibrary.simpleMessage("Щось пішло не так"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Спробувати знову")
       };
 }

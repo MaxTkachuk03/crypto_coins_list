@@ -1,5 +1,9 @@
 {
   "hight24Hour": "Hight 24 Hour",
   "low24Hour": "Low 24 Hour",
-  "cryptocurrencieslist": "CryptoCurrenciesList"
+  "cryptocurrencieslist": "CryptoCurrenciesList",
+  "tryAgain": "Try again",
+  "pleaseTryAgainLater": "Please try again later",
+  "somethingWentWrong": "Something went wrong",
+  "pleaseConnectToInternet": "Please, connect to internet!"
 }

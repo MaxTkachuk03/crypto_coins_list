@@ -3,7 +3,7 @@ part of 'crypto_coin_details_bloc.dart';
 
 abstract class CryptoCoinDetailsState extends Equatable {}
 
-final class CryptoCoinDetailsInitial extends CryptoCoinDetailsState {
+final class CryptoCoinDetailsInitialState extends CryptoCoinDetailsState {
   @override
   List<Object?> get props => [];
 }

@@ -1,5 +1,9 @@
 {
   "hight24Hour": "Найвища за 24 год",
   "low24Hour": "Найнижча за 24 год",
-  "cryptocurrencieslist": "КриптовалютнийСписок"
+  "cryptocurrencieslist": "КриптовалютнийСписок",
+  "tryAgain": "Спробувати знову",
+  "pleaseTryAgainLater": "Будь ласка, спробуйте знову пізніше",
+  "somethingWentWrong": "Щось пішло не так",
+  "pleaseConnectToInternet": "Будь ласка, підключіться до інтернету!"
 }

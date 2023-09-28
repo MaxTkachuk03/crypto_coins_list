@@ -16,19 +16,18 @@ class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState> {
     on<LoadCryptoListEvent>((event, emit) async {
       try {
         final result = await checkInternet.checkInternetConnection();
-        if (state is! CryptoListLoaded) {
-          emit(CryptoListLoading());
+        if (state is! CryptoListLoadedState) {
+          emit(CryptoListLoadingState());
         }
         if (result == true) {
           final coinsList = await coinsRepository.getCoinsList();
-          emit(CryptoListLoaded(coinsList: coinsList));
-        }
-        else{
+          emit(CryptoListLoadedState(coinsList: coinsList));
+        } else {
           final coinsList = coinsLocal.getLocalList();
-          emit(CryptoListLoaded(coinsList: coinsList));
+          emit(CryptoListLoadedState(coinsList: coinsList));
         }
       } catch (exception, stackTrace) {
-        emit(CryptoListLoadingFailure(exception: exception));
+        emit(CryptoListLoadingFailureState(exception: exception));
         GetIt.I<Talker>().handle(exception, stackTrace);
       } finally {
         event.completer?.complete();

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_coins_list/bloc/check_internet_connection_bloc/bloc/check_internet_connection_bloc.dart';
 import 'package:crypto_coins_list/bloc/crypto_list_bloc/crypto_list_bloc.dart';
 import 'package:crypto_coins_list/generated/l10n.dart';
 import 'package:crypto_coins_list/pages/crypto_list/widgets/widgets.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-@RoutePage()   
+@RoutePage()
 class CryptoListScreen extends StatefulWidget {
   const CryptoListScreen({
     super.key,
@@ -28,8 +29,13 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
     GetIt.I<AbstractCoinsLocal>(),
   );
 
+  final _checkInternetBloc = CheckInternetConnectionBloc(
+    GetIt.I<InternetConnection>(),
+  );
+
   @override
   void initState() {
+    _checkInternetBloc.add(const CheckInternetConnectionEvent());
     _cyptoListBloc.add(LoadCryptoListEvent());
     super.initState();
   }
@@ -64,71 +70,67 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
           _cyptoListBloc.add(LoadCryptoListEvent(completer: completer));
           return completer.future;
         },
-        child: BlocBuilder<CryptoListBloc, CryptoListState>(
-          bloc: _cyptoListBloc,
+        child: BlocConsumer<CheckInternetConnectionBloc,
+            CheckInternetConnectionState>(
+          bloc: _checkInternetBloc,
+          listener: (context, state) {
+            context.read<CheckInternetConnectionBloc>().add(
+                  CheckInternetConnectionEvent(
+                    checkInternet: state.checkInternet,
+                  ),
+                );
+          },
           builder: (context, state) {
-            if (state is CryptoListLoaded) {
-              return ListView.separated(
-                //shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 16.0),
-                itemCount: state.coinsList.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    color: theme.dividerColor,
-                  );
-                },
-                itemBuilder: (context, index) {
-                  final coin = state.coinsList[index];
-                  return CryptoCoinTile(coin: coin);
+            if (state.checkInternet == true) {
+              return BlocBuilder<CryptoListBloc, CryptoListState>(
+                bloc: _cyptoListBloc,
+                builder: (context, state) {
+                  if (state is CryptoListLoadedState) {
+                    return ListView.separated(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      itemCount: state.coinsList.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                          color: theme.dividerColor,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        final coin = state.coinsList[index];
+                        return CryptoCoinTile(coin: coin);
+                      },
+                    );
+                  }
+                  if (state is CryptoListLoadingFailureState) {
+                    return FailureLoadingList(
+                      onPressed: () {
+                        _checkInternetBloc
+                            .add(const CheckInternetConnectionEvent());
+                        _cyptoListBloc.add(LoadCryptoListEvent());
+                      },
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
                 },
               );
             }
-            // if (state is CryptoListLoadingFailure) {
-            //   return Center(
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: [
-            //         Text(
-            //           "Something went wrong",
-            //           style: theme.textTheme.headlineMedium,
-            //         ),
-            //         Text(
-            //           "Please try again later",
-            //           style:
-            //               theme.textTheme.labelSmall?.copyWith(fontSize: 16.0),
-            //         ),
-            //         const SizedBox(height: 30.0),
-            //         TextButton(
-            //             onPressed: () {
-            //               _cyptoListBloc.add(LoadCryptoList());
-            //             },
-            //             child: const Text(
-            //               "Try again",
-            //             )),
-            //       ],
-            //     ),
-            //   );
-            // }
+            if (state.checkInternet == false) {
+              return BlocBuilder<CryptoListBloc, CryptoListState>(
+                bloc: _cyptoListBloc,
+                builder: (BuildContext context, CryptoListState state) {
+                  return FailureLoadingList(
+                    onPressed: () {
+                      _checkInternetBloc
+                          .add(const CheckInternetConnectionEvent());
+                      _cyptoListBloc.add(LoadCryptoListEvent());
+                    },
+                  );
+                },
+              );
+            }
             return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
-      // _cryptoCoinsList == null
-      //     ?
-      //     : ListView.separated(
-      //         padding: const EdgeInsets.only(top: 16.0),
-      //         itemCount: _cryptoCoinsList!.length,
-      //         separatorBuilder: (BuildContext context, int index) {
-      //           return Divider(
-      //             color: theme.dividerColor,
-      //           );
-      //         },
-      //         itemBuilder: (context, index) {
-      //           final coin = _cryptoCoinsList![index];
-      //           return CryptoCoinTile(coin: coin);
-      //         },
-      //       ),
     );
   }
 }

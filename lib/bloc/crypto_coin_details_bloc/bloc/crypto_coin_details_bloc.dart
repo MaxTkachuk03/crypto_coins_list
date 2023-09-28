@@ -12,7 +12,7 @@ class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   CryptoCoinDetailsBloc(
       this.coinsRepository, this.coinsLocal, this.checkInternet)
-      : super(CryptoCoinDetailsInitial()) {
+      : super(CryptoCoinDetailsInitialState()) {
     on<LoadCryptoCoinDetailsEvent>(_loadCoinDetails);
   }
   final AbstractCoinsRepository coinsRepository;

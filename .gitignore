@@ -5,10 +5,13 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
+firepit-log.txt
 
 # IntelliJ related
 *.iml
@@ -16,10 +19,9 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code / Cursor
+.vscode/
+.cursor/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -30,6 +32,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.fvm/
+coverage/
 
 # Symbolication related
 app.*.symbols
@@ -41,3 +45,21 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+**/key.properties
+**/*.keystore
+**/*.jks
+
+# Firebase / Google services (keep locally, do not push)
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_app_id_file.json
+
+# CocoaPods build output (Podfile stays in git)
+**/Pods/

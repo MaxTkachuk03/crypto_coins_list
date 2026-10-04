@@ -28,7 +28,7 @@ class AppStyles {
   );
 
   static final labelSmall = TextStyle(
-    color: AppColors.defaultColor.withOpacity(0.6),
+    color: AppColors.defaultColor.withValues(alpha: 0.6),
     fontWeight: FontWeight.w700,
     fontSize: 14.0,
   );

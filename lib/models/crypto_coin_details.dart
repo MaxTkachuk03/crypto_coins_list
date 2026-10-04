@@ -46,7 +46,9 @@ class CryptoCoinDetails extends Equatable {
   @JsonKey(name: "LOW24HOUR")
   final double high24Hour;
 
-  String get fullImageUrl => 'https://www.cryptocompare.com/$imageUrl';
+  String get fullImageUrl => imageUrl.startsWith('http')
+      ? imageUrl
+      : 'https://www.cryptocompare.com/$imageUrl';
 
   factory CryptoCoinDetails.fromJson(Map<String, dynamic> json) =>
       _$CryptoCoinDetailsFromJson(json);

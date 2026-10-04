@@ -6,7 +6,7 @@ import 'package:crypto_coins_list/bloc/crypto_list_bloc/crypto_list_bloc.dart';
 import 'package:crypto_coins_list/generated/l10n.dart';
 import 'package:crypto_coins_list/pages/crypto_list/widgets/widgets.dart';
 import 'package:crypto_coins_list/repositories/crypto_coins/crypto_coins.dart';
-import 'package:crypto_coins_list/resources/icons/icons.dart';
+import 'package:crypto_coins_list/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -63,7 +63,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         ],
       ),
       body: RefreshIndicator(
-        color: theme.indicatorColor,
+        color: AppColors.indicatorColor,
         backgroundColor: theme.scaffoldBackgroundColor,
         onRefresh: () async {
           _checkInternetBloc.add(const CheckInternetConnectionEvent());

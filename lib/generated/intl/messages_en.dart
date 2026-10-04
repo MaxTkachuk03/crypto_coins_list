@@ -22,16 +22,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "cryptocurrencieslist":
-            MessageLookupByLibrary.simpleMessage("CryptoCurrenciesList"),
+        "cryptocurrencieslist": MessageLookupByLibrary.simpleMessage(
+          "CryptoCurrenciesList",
+        ),
         "hight24Hour": MessageLookupByLibrary.simpleMessage("Hight 24 Hour"),
         "low24Hour": MessageLookupByLibrary.simpleMessage("Low 24 Hour"),
         "pleaseConnectToInternet": MessageLookupByLibrary.simpleMessage(
-            "Please, connect to internet!"),
-        "pleaseTryAgainLater":
-            MessageLookupByLibrary.simpleMessage("Please try again later"),
-        "somethingWentWrong":
-            MessageLookupByLibrary.simpleMessage("Something went wrong"),
-        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again")
+          "Please, connect to internet!",
+        ),
+        "pleaseTryAgainLater": MessageLookupByLibrary.simpleMessage(
+          "Please try again later",
+        ),
+        "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
+          "Something went wrong",
+        ),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
       };
 }

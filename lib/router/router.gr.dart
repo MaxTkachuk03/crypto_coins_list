@@ -4,14 +4,16 @@
 // AutoRouterGenerator
 // **************************************************************************
 
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, unused_element_parameter
 // coverage:ignore-file
 
 part of 'router.dart';
 
 abstract class _$AppRouter extends RootStackRouter {
   // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
+  _$AppRouter({super.navigatorKey}) {
+    final _ = navigatorKey;
+  }
 
   @override
   final Map<String, PageFactory> pagesMap = {

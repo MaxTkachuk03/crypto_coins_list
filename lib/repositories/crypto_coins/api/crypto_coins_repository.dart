@@ -12,8 +12,22 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   final Dio dio;
   final Box<CryptoCoin> cryptoCoinsBox;
 
-  static const String defaultUrl =
-      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BNB,AVAX,SOL,AID,CAG,DOV&tsyms=USD';
+  /// CoinGecko free API (CryptoCompare now requires a paid API key).
+  static const String _marketsUrl =
+      'https://api.coingecko.com/api/v3/coins/markets';
+
+  static const Map<String, String> _coinIdsBySymbol = {
+    'BTC': 'bitcoin',
+    'ETH': 'ethereum',
+    'BNB': 'binancecoin',
+    'AVAX': 'avalanche-2',
+    'SOL': 'solana',
+    'DOGE': 'dogecoin',
+    'XRP': 'ripple',
+    'ADA': 'cardano',
+  };
+
+  static String get _coinIdsQuery => _coinIdsBySymbol.values.join(',');
 
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
@@ -26,21 +40,20 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   }
 
   Future<List<CryptoCoin>> _fetchCoinsListFromApi() async {
-    final response = await dio.get(defaultUrl);
+    final response = await dio.get(
+      _marketsUrl,
+      queryParameters: {
+        'vs_currency': 'usd',
+        'ids': _coinIdsQuery,
+        'order': 'market_cap_desc',
+        'sparkline': false,
+      },
+    );
 
-    final data = response.data as Map<String, dynamic>;
-    final dataRaw = data['RAW'] as Map<String, dynamic>;
-    final cryptoCoinsList = dataRaw.entries.map((e) {
-      final usdData =
-          (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-
-      final details = CryptoCoinDetails.fromJson(usdData);
-      return CryptoCoin(
-        name: e.key,
-        details: details,
-      );
-    }).toList();
-    return cryptoCoinsList;
+    final data = response.data as List<dynamic>;
+    return data
+        .map((item) => _mapMarketItem(item as Map<String, dynamic>))
+        .toList();
   }
 
   @override
@@ -51,17 +64,44 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   }
 
   Future<CryptoCoin> _fetchCoinDetailsFromApi(String nameCode) async {
-    final response = await dio.get(
-        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=$nameCode&tsyms=USD');
+    final coinId = _coinIdsBySymbol[nameCode.toUpperCase()];
+    if (coinId == null) {
+      throw ArgumentError('Unsupported coin symbol: $nameCode');
+    }
 
-    final data = response.data as Map<String, dynamic>;
-    final dataRaw = data["RAW"] as Map<String, dynamic>;
-    final coinData = dataRaw[nameCode] as Map<String, dynamic>;
-    final usdData = coinData["USD"] as Map<String, dynamic>;
-    final details = CryptoCoinDetails.fromJson(usdData);
+    final response = await dio.get(
+      _marketsUrl,
+      queryParameters: {
+        'vs_currency': 'usd',
+        'ids': coinId,
+        'sparkline': false,
+      },
+    );
+
+    final data = response.data as List<dynamic>;
+    if (data.isEmpty) {
+      throw StateError('No market data for $nameCode');
+    }
+
+    return _mapMarketItem(data.first as Map<String, dynamic>);
+  }
+
+  CryptoCoin _mapMarketItem(Map<String, dynamic> item) {
+    final symbol = (item['symbol'] as String).toUpperCase();
+    final lastUpdated = DateTime.parse(item['last_updated'] as String);
+
+    final details = CryptoCoinDetails(
+      priceInUSD: (item['current_price'] as num).toDouble(),
+      imageUrl: item['image'] as String,
+      toSymbol: 'USD',
+      lastUpdate: lastUpdated,
+      // Keep field names aligned with UI labels (not CryptoCompare JSON quirk).
+      low24Hour: (item['low_24h'] as num).toDouble(),
+      high24Hour: (item['high_24h'] as num).toDouble(),
+    );
 
     return CryptoCoin(
-      name: nameCode,
+      name: symbol,
       details: details,
     );
   }

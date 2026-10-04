@@ -9,9 +9,9 @@ A high-performance, cross-platform mobile application built with Flutter for mon
 
 <div align="center">
   <!-- Replace these placeholder links with actual paths to your screenshots -->
-  <img src="screenshot_1.png" alt="Home Screen" width="250" />
+  <img src="" alt="Home Screen" width="250" />
   &nbsp;&nbsp;&nbsp;
-  <img src="screenshot_2.png" alt="Details Screen" width="250" />
+  <img src="" alt="Details Screen" width="250" />
 </div>
 
 ## ✨ Key Features

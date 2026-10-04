@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cryptocurrencieslist": MessageLookupByLibrary.simpleMessage(
           "CryptoCurrenciesList",
         ),
-        "hight24Hour": MessageLookupByLibrary.simpleMessage("Hight 24 Hour"),
+        "hight24Hour": MessageLookupByLibrary.simpleMessage("High 24 Hour"),
         "low24Hour": MessageLookupByLibrary.simpleMessage("Low 24 Hour"),
         "pleaseConnectToInternet": MessageLookupByLibrary.simpleMessage(
           "Please, connect to internet!",

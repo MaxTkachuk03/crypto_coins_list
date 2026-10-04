@@ -8,10 +8,7 @@ A high-performance, cross-platform mobile application built with Flutter for mon
 ## 📱 App Preview
 
 <div align="center">
-  <!-- Replace these placeholder links with actual paths to your screenshots -->
-  <img src="" alt="Home Screen" width="250" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="" alt="Details Screen" width="250" />
+  <img src="assets/icons/CryptoCurrenciesList.png" alt="CryptoCoins App Screens" width="800" />
 </div>
 
 ## ✨ Key Features
